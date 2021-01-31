@@ -16,6 +16,10 @@ class SpaceItemDecorationActivity : AppCompatActivity() {
     private lateinit var verticalRecyclerView: RecyclerView
     private lateinit var gridRecyclerView: RecyclerView
 
+    private lateinit var framelessHorizontalRecyclerView: RecyclerView
+    private lateinit var framelessVerticalRecyclerView: RecyclerView
+    private lateinit var framelessGridRecyclerView: RecyclerView
+
     private val listData = listOf<String>("A", "B", "C", "D", "E", "F", "G", "H", "I", "K", "M")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +33,9 @@ class SpaceItemDecorationActivity : AppCompatActivity() {
         horizontalRecyclerView = findViewById(R.id.horizontal_recycler_view)
         verticalRecyclerView = findViewById(R.id.vertical_recycler_view)
         gridRecyclerView = findViewById(R.id.grid_recycler_view)
+        framelessHorizontalRecyclerView = findViewById(R.id.frameless_horizontal_recycler_view)
+        framelessVerticalRecyclerView = findViewById(R.id.frameless_vertical_recycler_view)
+        framelessGridRecyclerView = findViewById(R.id.frameless_grid_recycler_view)
 
         with(horizontalRecyclerView) {
 
@@ -60,12 +67,51 @@ class SpaceItemDecorationActivity : AppCompatActivity() {
 
         with(gridRecyclerView) {
 
-            layoutManager = GridLayoutManager(this@SpaceItemDecorationActivity, 3)
+            layoutManager = GridLayoutManager(this@SpaceItemDecorationActivity, 4)
             val ad = SpaceItemDecorationAdapter(R.layout.item_space_decoration_grid, listData)
             adapter = ad
 
-            addItemDecoration(GridItemDecoration(48, 48, 3))
+            addItemDecoration(GridItemDecoration(48, 4))
+            setHasFixedSize(true)
+        }
 
+
+        with(framelessHorizontalRecyclerView) {
+
+            layoutManager = LinearLayoutManager(
+                this@SpaceItemDecorationActivity,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+
+            addItemDecoration(LinearItemDecoration(48, 0, isIncludeEdge = false))
+
+            val ad = SpaceItemDecorationAdapter(R.layout.item_space_decoration_horizontal, listData)
+            adapter = ad
+        }
+
+        with(framelessVerticalRecyclerView) {
+
+            layoutManager = LinearLayoutManager(
+                this@SpaceItemDecorationActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+
+            addItemDecoration(LinearItemDecoration(48, 48, isIncludeEdge = false))
+
+            val ad = SpaceItemDecorationAdapter(R.layout.item_space_decoration_vertical, listData)
+            adapter = ad
+        }
+
+        with(framelessGridRecyclerView) {
+
+            layoutManager = GridLayoutManager(this@SpaceItemDecorationActivity, 5)
+            val ad = SpaceItemDecorationAdapter(R.layout.item_space_decoration_grid, listData)
+            adapter = ad
+
+            addItemDecoration(GridItemDecoration(48, 5, false))
+            setHasFixedSize(true)
         }
     }
 }

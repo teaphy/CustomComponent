@@ -12,10 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
  * @author tiany
  * @time  2021-01-28  11:48
  * @version 1.0
+ * @param horizontalSpace 水平方向的间距
+ * @param verticalSpace 垂直方向的间距
+ * @param isIncludeEdge 是否包含边距，默认为true
  */
 class LinearItemDecoration(
     private val horizontalSpace: Int,
-    private val verticalSpace: Int
+    private val verticalSpace: Int,
+    private val isIncludeEdge: Boolean = true
 ) :
     RecyclerView.ItemDecoration() {
 
@@ -56,7 +60,11 @@ class LinearItemDecoration(
         when (position) {
             0 -> {
                 with(outRect) {
-                    left = horizontalSpace
+                    left = if (isIncludeEdge) {
+                        horizontalSpace
+                    } else {
+                        0
+                    }
                     right = horizontalSpace / 2
                     bottom = verticalSpace
                     top = verticalSpace
@@ -65,7 +73,11 @@ class LinearItemDecoration(
             totalCount - 1 -> {
                 with(outRect) {
                     left = horizontalSpace / 2
-                    right = horizontalSpace
+                    right = if (isIncludeEdge) {
+                        horizontalSpace
+                    } else {
+                        0
+                    }
                     bottom = verticalSpace
                     top = verticalSpace
                 }
@@ -88,14 +100,22 @@ class LinearItemDecoration(
                     left = horizontalSpace
                     right = horizontalSpace
                     bottom = verticalSpace / 2
-                    top = verticalSpace
+                    top = if (isIncludeEdge) {
+                        verticalSpace
+                    } else {
+                        0
+                    }
                 }
             }
             totalCount - 1 -> {
                 with(outRect) {
                     left = horizontalSpace
                     right = horizontalSpace
-                    bottom = verticalSpace
+                    bottom = if (isIncludeEdge) {
+                        verticalSpace
+                    } else {
+                        0
+                    }
                     top = verticalSpace / 2
                 }
             }
@@ -109,10 +129,4 @@ class LinearItemDecoration(
             }
         }
     }
-
-    private fun configGridDecoration(outRect: Rect, position: Int, totalCount: Int) {
-
-
-    }
-
 }
